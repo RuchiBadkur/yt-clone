@@ -1,60 +1,61 @@
-let api_key = "AIzaSyBMSUkaQYuMbS1oUOn775i1eZP9RSKUt94";
-let video_http = "https://www.googleapis.com/youtube/v3/videos?";
-let channel_http = "https://www.googleapis.com/youtube/v3/channels?";
-let search_http = "https://www.googleapis.com/youtube/v3/search?";
-// let search_http = "https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=20&q=javascript&regionCode=IN&relevanceLanguage=en&key=[YOUR_API_KEY]"
-// let channel_id = "UCDRA2X1Tp2idmQZ4-EASDEA";
-// let uploads = "UUDRA2X1Tp2idmQZ4-EASDEA"
-// let url = "https://youtube.googleapis.com/youtube/v3/playlists?part=snippet&channelId=UCDRA2X1Tp2idmQZ4-EASDEA&maxResults=20&key=AIzaSyBMSUkaQYuMbS1oUOn775i1eZP9RSKUt94"
+document.addEventListener("DOMContentLoaded", () => {
+    let cache = {};
 
-// Authorization: Bearer [YOUR_ACCESS_TOKEN]
-// Accept: application/json
+    // API CONFIGURATION
+    const api_key = "AIzaSyBMSUkaQYuMbS1oUOn775i1eZP9RSKUt94";
+    const video_http = "https://www.googleapis.com/youtube/v3/videos?";
+    const channel_http = "https://www.googleapis.com/youtube/v3/channels?";
+    const search_http = "https://www.googleapis.com/youtube/v3/search?";
 
-// youtube data api reference: https://developers.google.com/youtube/v3/docs
+    // DOM ELEMENTS
+    const searchInput = document.querySelector(".search");
+    const searchButton = document.querySelector(".search-button");
+    const videoCardContainer = document.querySelector(".video-wrapper");
 
-const videoCardContainer = document.querySelector(".video-wrapper");
+    // FETCH MOST POPULAR VIDEOS
+    const getMostPopularVideos = () => {
+        videoCardContainer.innerHTML = ""; // Clear previous results
 
+        fetch(video_http + new URLSearchParams({
+            key: api_key,
+            part: "snippet",
+            chart: "mostPopular",
+            maxResults: 30,
+            regionCode: "IN"
+        }))
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.items && data.items.length > 0) {
+                    cache["popularVideos"] = data.items;
+                    data.items.forEach((video) => getChannelDetails(video));
+                } else {
+                    console.log("No popular videos found.");
+                }
+            })
+            .catch((error) => console.error("Error fetching popular videos:", error));
+    };
 
-// Fetch the most popular videos
-fetch(video_http + new URLSearchParams({
-    key: api_key,
-    part: 'snippet',
-    chart: 'mostPopular',
-    maxResults: 30, 
-    regionCode: 'IN' // Region code for filtering
-}))
-// ?key=YOUR_API_KEY&part=snippet&chart=mostPopular&maxResults=30&regionCode=IN
-.then(response => response.json())
-.then((data) => {
-    data.items.forEach(video => {
-        getChannelIcon(video);
-    });
-})
-.catch(err => console.error(err));
+    // FETCH CHANNEL DETAILS
+    const getChannelDetails = (video_data) => {
+        fetch(channel_http + new URLSearchParams({
+            key: api_key,
+            part: "snippet",
+            id: video_data.snippet.channelId
+        }))
+            .then((response) => response.json())
+            .then((data) => {
+                video_data.channelThumbnail = data.items[0]?.snippet?.thumbnails?.default?.url || "";
+                createVideoCard(video_data);
+            })
+            .catch((error) => console.error("Error fetching channel details:", error));
+    };
 
-// Function to fetch channel details
-const getChannelIcon = (video_data) => {
-    fetch(channel_http + new URLSearchParams({
-        key: api_key,
-        part: 'snippet',
-        id: video_data.snippet.channelId // Channel ID of the video
-    }))
-    .then(response => response.json())
-    .then(data => {
-        video_data.channelThumbnail = data.items[0].snippet.thumbnails.default.url; // Getting channel logo
-        makeVideoCard(video_data); // Call the function to display videos
-    });
-    
-};
-
-// Function to display video details on the page
-const makeVideoCard = (video) => {
-    
-
-    let videoCard = document.createElement('div');
-    videoCard.classList.add('video');
-
-    videoCard.innerHTML = `
+    // CREATE VIDEO CARD
+    const createVideoCard = (video) => {
+        const videoCard = document.createElement("div");
+        videoCard.classList.add("video-card");
+        // console.log(video);
+        videoCard.innerHTML = `
             <div class="video-content">
                 <img src="${video.snippet.thumbnails.high.url}" alt="thumbnail" class="thumbnail">
             </div>
@@ -67,7 +68,62 @@ const makeVideoCard = (video) => {
                     <div class="channel-name">${video.snippet.channelTitle}</div>
                 </div>
             </div>
-    `;
-    videoCardContainer.appendChild(videoCard)
+        `;
+        videoCardContainer.appendChild(videoCard);
+    };
 
-};
+    // SEARCH FUNCTION
+    const handleSearch = (searchVal) => {
+        if (!searchVal) {
+            checkCachedVideos();
+            return;
+        }
+
+        videoCardContainer.innerHTML = ""; // Clear previous results
+
+        fetch(search_http + new URLSearchParams({
+            part: "snippet",
+            maxResults: 25,
+            q: searchVal,
+            key: api_key
+        }))
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.items && data.items.length > 0) {
+                    data.items.forEach((item) => getChannelDetails(item));
+                } else {
+                    console.log("No results found for this search term.");
+                }
+            })
+            .catch((error) => console.error("Error searching videos:", error));
+    };
+
+    // INITIAL LOAD OR CACHE CHECK
+    const checkCachedVideos = () => {
+        if (cache["popularVideos"]) {
+            videoCardContainer.innerHTML = ""; // Clear container
+            cache["popularVideos"].forEach((video) => createVideoCard(video));
+        } else {
+            getMostPopularVideos();
+        }
+    };
+
+    // EVENT LISTENERS
+    if (searchInput) {
+        searchInput.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                e.preventDefault();
+                handleSearch(searchInput.value.trim());
+            }
+        });
+    }
+
+    if (searchButton) {
+        searchButton.addEventListener("click", () => {
+            handleSearch(searchInput.value.trim());
+        });
+    }
+
+    // INITIALIZE APP
+    checkCachedVideos();
+});

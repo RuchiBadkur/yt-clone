@@ -3,138 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YouTube Clone</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css" referrerpolicy="no-referrer" />
+    <title>Document</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="shortcut icon" href="./images/yt-fav-icon.png" type="image/x-icon">
 </head>
 <body>
-    <div class="header">
-        <div class="col-1">
-            <i class="ri-menu-line"></i>
-            <div class="logo">
-                <div class="logo-img">
-                    <img src="./images/ytIcon.png" alt="YouTube Logo">
+    <div class="body-container">
+        <!-- navbar  -->
+        <nav class="nav flex-row">
+            <div class="left-nav flex-row">
+                    <i class="fa-solid fa-bars"></i>
+                    <i class="fa-brands fa-youtube" style="color: #e81111;"></i>
+            </div>
+            <div class="center-nav flex-row">
+                <div class="search-container">
+                    <input type="text" class="search" placeholder="search...">
+                    <button class="search-button"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </div>
             </div>
-        </div>
-        <div class="col-2">
-            <form action="#">
-                <input type="text" placeholder="Search">
-            </form>
-            <button class="search">
-                <i class="ri-search-line"></i>
-            </button>
-            <button class="mic">
-                <i class="ri-mic-line"></i>
-            </button>
-        </div>
-        <div class="col-3">
-            <i class="ri-video-add-line"></i>
-            <i class="ri-notification-3-fill"></i>
-            <i class="ri-user-fill"></i>
-        </div>
+            <div class="right-nav flex-row y-center">
+                <div class="credentials flex-row y-center">
+                    <i class="fa-regular fa-user"></i>
+                    <p>Sign in</p>
+                </div>
+            </div>
+        </nav>
+
+        <!-- wrapper -->
+         <div class="wrapper">
+            <div class="sidebar">
+                <div class="col">
+                    <div>
+                        <i class="fa-solid fa-house"></i>
+                        <span>Home</span>
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-fire-flame-curved"></i>
+                        <span>Shorts</span>
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-clapperboard"></i>
+                        <span>Subscription</span>
+                    </div>
+                    <div>
+                        <i class="fa-regular fa-circle-play"></i>
+                        <span>Yt Music</span>
+                    </div>
+                </div>
+                <hr/>
+                <div class="col">
+                    <h4>Explore</h4>
+                    <div>
+                        <i class="fa-solid fa-arrow-trend-up"></i>
+                        <span>Trending</span>
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <span>Shopping</span>
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-music"></i>
+                        <span>Music</span>
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-film"></i>
+                        <span>Films</span>
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-video"></i>
+                        <span>Live</span>
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-ghost"></i>
+                        <span>Gaming</span>
+                    </div>
+                    <div>
+                        <i class="fa-regular fa-newspaper"></i>
+                        <span>News</span>
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-baseball"></i>
+                        <span>Sport</span>
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-book"></i>
+                        <span>Courses</span>
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-hat-wizard"></i>
+                        <span>Fashion & beauty</span>
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-podcast"></i>
+                        <span>Podcasts</span>
+                    </div>
+                </div>
+                <hr />
+                <div class="col">
+                    <div>
+                        <i class="fa-solid fa-gear"></i>
+                        <span>Settings</span>
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                        <span>Report history</span>
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-hand-holding-hand"></i>
+                        <span>Help</span>
+                    </div>
+                    <div>
+                        <i class="fa-regular fa-message"></i>
+                        <span>Feedback</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="main-content">
+                <div class="tagline">
+                    <span>HTML</span>
+                    <span>Podcasts</span>
+                    <span>CSS</span>
+                    <span>Self-care</span>
+                    <span>JavaScript</span>
+                    <span>React</span>
+                    <span>Redux</span>
+                    <span>Music</span>
+                    <span>Home Tour</span>
+                </div>
+                <div class="video-wrapper">
+                    video-wrapper
+                </div>
+            </div>
+         </div>
     </div>
-    <!-- wrapper -->
-     <div class="wrapper">
-        <!-- sidebar -->
-        <div class="sidebar">
-            <div class="list1">
-                <a class="sidebar-item">
-                    <i class="ri-home-5-line"></i>
-                    Home
-                </a>
-                <a class="sidebar-item">
-                    <i class="ri-compass-3-line"></i>
-                    Explore
-                </a>
-                <a class="sidebar-item">
-                    <i class="ri-film-line"></i>
-                    Shorts
-                </a>
-                <a class="sidebar-item">
-                    <i class="ri-team-line"></i>
-                    Subscription
-                </a>
-                <hr/>
-                <a class="sidebar-item">
-                    <i class="ri-booklet-line"></i>
-                    Library
-                </a>
-                <a class="sidebar-item">
-                    <i class="ri-history-line"></i>
-                    History</a>
-                <a class="sidebar-item">
-                    <i class="ri-video-line"></i>
-                    Your videos</a>
-                <a class="sidebar-item">
-                    <i class="ri-timer-2-line"></i>
-                    Watch later</a>
-                <a class="sidebar-item">
-                    <i class="ri-movie-line"></i>
-                    All videos</a>
-                <a class="sidebar-item">
-                    <i class="ri-slideshow-3-line"></i>
-                    Show more</a>
-                <h4 class="more">More from youtube</h4>
-                <a class="sidebar-item">
-                    <i class="ri-gamepad-line"></i>
-                    Gaming</a>
-                <a class="sidebar-item">
-                    <i class="ri-live-line"></i>
-                    Live</a>
-                <a class="sidebar-item">
-                    <i class="ri-basketball-line"></i>
-                    Sports</a>
-                <hr/>
-                <a class="sidebar-item">
-                    <i class="ri-settings-2-line"></i>
-                    Settings</a>
-                <a class="sidebar-item">
-                    <i class="ri-history-line"></i>
-                    Report history</a>
-                <a class="sidebar-item">
-                    <i class="ri-question-line"></i>
-                    Help</a>
-                <a class="sidebar-item">
-                    <i class="ri-mail-send-line"></i>
-                    Send feedback</a>
-            </div>
-        </div>
-
-        <!-- main content -->
-        <div class="content">
-            <!-- tagline -->
-            <div class="tag-line">
-                <div class="tag">
-                    <p>All</p>
-                </div>
-                <div class="tag">
-                    <p>Redux</p>
-                </div>
-                <div class="tag">
-                    <p>Data Science</p>
-                </div>
-                <div class="tag">
-                    <p>Flutter</p>
-                </div>
-                <div class="tag">
-                    <p>JavaScript</p>
-                </div>
-                <div class="tag">
-                    <p>React</p>
-                </div>
-                <div class="tag">
-                    <p>UI/UX</p>
-                </div>
-            </div>
-            <div class="video-wrapper">
-                
-            </div>
-        </div>
-
-     </div>
-
-     <script src="script.js"></script>
+    <script src="https://kit.fontawesome.com/720668dcad.js" crossorigin="anonymous"></script>
+    <script src="./script.js"></script>
 </body>
 </html>
